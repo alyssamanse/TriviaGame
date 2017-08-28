@@ -8,9 +8,15 @@ $(document).ready(function() {
 
 	// Question
 	var currentQuestion = $("#currentQuestion");
+	var printQuestion = currentQuestion.html("<p> " + triviaQuestions[questionCounter] + "</p");
 
 	// Answer Choices
 	var answerChoices = $("#answerChoices");
+	var answer1 = "<li list-style='none'>" + triviaQuestions[questionCounter].answers[0] + "</li>";
+	var answer2 = "<li list-style='none'>" + triviaQuestions[questionCounter].answers[1] + "</li>";
+	var answer3 = "<li list-style='none'>" + triviaQuestions[questionCounter].answers[2] + "</li>";
+	var answer4 = "<li list-style='none'>" + triviaQuestions[questionCounter].answers[3] + "</li>";
+	var printAnswers = answerChoices.html("<ul>" + answer1 + answer2 + answer3 + answer4 + "</ul>")
 
 	// Result
 	var result = $("#result");
@@ -48,6 +54,7 @@ $(document).ready(function() {
 	var countdownTimer;
 	var thirtySeconds;
 	var stop;
+	var questionCounter = 0;
 
 
 	// Objects for each question
@@ -55,19 +62,33 @@ $(document).ready(function() {
 
 	var question1 = {
 		question: "What is Rachel Green's middle name?",
-		answerChoices: ["Monica", "Maryanne", "Karen", "Kimberlina"],
+		answers: ["Monica", "Maryanne", "Karen", "Kimberlina"],
 		answerIndex: 2,
 		answer: "Karen"
 	}
+
+	var question2 = {
+		question: "What is the dog's name in Frasier?",
+		answers: ["Martin", "Eddie", "Niles", "Maris"],
+		answerIndex: 1,
+		answer: "Eddie"
+	}
+
+	var triviaQuestions = [question1, question2];
 
 	function displayQuestion(q) {
 
 		countdownTimer();
 		timeRemaining.html("<h2> Time Remaining: " + countdown + "</h2>");
-		currentQuestion.html(q.question);
+		printQuestion;
 	}
 
-	displayQuestion(question1);
+	displayQuestion();
+	displayAnswers();
+
+	function displayAnswers() {
+		printAnswers;
+	}
 
 
 	// Randomize order of answer array to insert into answer spaces
