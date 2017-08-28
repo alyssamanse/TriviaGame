@@ -22,52 +22,84 @@ $(document).ready(function() {
 	// Unanswered Count
 	var unansweredCount = $("#unansweredCount");
 	var unanswered = 0;
-	// unansweredCount.html("<h3> Unanswered: " + unanswered + "</h3>");
+	
+
+	// Image location in HTML
+	var gif = $("#gif");
 
 	// Declaring interval ID to store countdown ID
 	var intervalId;
 
 	// Countdown Timer
-	var countdown = 30;
+	var countdown;
 
 	var countdownTimer;
 	var thirtySeconds;
 	var stop;
+	var isOutOfTime;
 	var questionCounter = 0;
 
-	// FIX: UNANSWERED, WHEN COUNT === 0
-	// ADD: TRIVIA QUESTIONS
+	console.log("global scope " + isOutOfTime);
+
+	// CHANGE NEXTPAGE TO SHOW CORRECT ANSWER AND THEN DISPLAY NEXT QUESTION
+	// TEST IMAGES IN NEXTPAGE FUNCTION
 
 	// --------------------------- Bank of Questions -------------------------------------------------------//
 
-	triviaQuestions = [
+	var triviaQuestions = [
 		"What is Rachel Green's middle name?",
-		"What is the dog's name in Frasier?"
+		"What is the dog's name in Frasier?", 
+		"Who was the FBI agent in Twin Peaks?",
+		"Name the dynamic duo of The X-Files", 
+		"Which one of these was not the last name of a main character in Dawson's Creek?",
 	]
 
 
 	// --------------------------- Bank of Correct Answers -------------------------------------------------//
 
-	correctAnswers = [
+	var correctAnswers = [
 		"Karen",
-		"Eddie"
+		"Eddie",
+		"Dale Cooper",
+		"Mulder and Scully",
+		"Morris",
 	]
 
 	// --------------------------- Bank of Answer Choices --------------------------------------------------//
 
-	answerOptions = [
+	var answerOptions = [
 		["Monica", "Karen", "Maryann", "Krystal"],
 		["Martin", "Buster", "Eddie", "Sir Pounce"]
+		["Dale Cooper", "Laura Palmer", "Harry S. Truman", "Bejamin Horne"],
+		["Miller and Scavo", "Mulder and Scully", "Musgrave and Shriver", "Mulberry and Schroder"],
+		["Witter", "McPhee", "Lindley", "Morris"],
 	] 
+
+	// --------------------------- Bank of Answer Gifs -----------------------------------------------------//
+
+	var correctAnswerGifs = [
+		"rachel-karen-green-win.gif",
+		"eddie-frasier-win.gif",
+		"dale-cooper-win.gif",
+		"mulder-scully-win",
+		"dawsons-creek-win"
+	]
+
+	var incorrectAnswerGifs = [
+		"rachel-karen-green-lose.gif",
+		"eddie-frasier-lose.gif",
+		"dale-cooper-lose.gif",
+		"mulder-scully-lose",
+		"dawsons-creek-lose"
+	]
 
 	// --------------------------- Display Question and Answer Choices--------------------------------------//
 
 	function displayQuestion() {
-		countdown = 30;
+		console.log("inside displayQuestion function " + isOutOfTime);
 		countdownTimer();
-		currentQuestion.empty();
+		emptyContent();
 		currentQuestion.append(triviaQuestions[questionCounter]).addClass("question");
-		answerChoices.empty();
 
 		answerOptions[questionCounter].forEach(function(answerChoice) {
 			var answer = $("<button>").html(answerChoice).addClass("answer");
@@ -75,29 +107,30 @@ $(document).ready(function() {
 		})
 
 		$("button").click(function(event) {
-			if (countdown === 0) {
-				stop();
-				unanswered++;
-				questionCounter++;
-				nextPage();
-			}
-
 			if ($(this).html() === correctAnswers[questionCounter]) {
 				stop();
 				correct++;
 				questionCounter++;
-				nextPage();
+				// nextPage();
 			} else {
 				stop();
 				incorrect++;
 				questionCounter++;
-				nextPage();
+				// nextPage();
 			}
 		})
 	}
 
+	function resultsPageWin() {
+		// IF WIN, SHOW CORRECT! AND CORRECT GIF
+	}
+
+	function resultsPageLose() {
+		// IF LOSE, SHOW INCCORECT W/ CORRECT ANSWER AND LOSE GIF
+	}
+
 	function nextPage() {
-		if (questionCounter >= 2) {
+		if (questionCounter >= 5) {
 			finalScreen();
 		} else {
 			displayQuestion();
@@ -107,11 +140,17 @@ $(document).ready(function() {
 
 	function finalScreen() {
 		timeRemaining.empty();
-		currentQuestion.empty();
-		answerChoices.empty();
+		emptyContent();
 		correctCount.html("<h3> Correct: " + correct + "</h3>");
 		incorrectCount.html("<h3> Incorrect: " + incorrect + "</h3>");
 		unansweredCount.html("<h3> Unanswered: " + unanswered + "</h3>");
+	}
+
+	// Empties all html content for trivia question, answer and images (leaves time remaining in place)
+	function emptyContent() {
+		currentQuestion.empty();
+		answerChoices.empty();
+		gif.empty();
 	}
 
 	displayQuestion();
@@ -121,15 +160,22 @@ $(document).ready(function() {
 
 	function countdownTimer() {
 		countdown = 10;
+		isOutOfTime = false;
 		intervalId = setInterval(thirtySeconds, 1000);
 	};
 
 	function thirtySeconds() {
-		countdown--;
 		timeRemaining.html("<h2> Time Remaining: " + countdown + "</h2>");
+		countdown--;
 
-		if (countdown === 0) {
-			stop();
+		if (countdown < 0) {
+			isOutOfTime = true;
+			if (isOutOfTime === true) {
+				stop();
+				unanswered++;
+				questionCounter++;
+				// nextPage();
+			}
 		} 
 	}
 
