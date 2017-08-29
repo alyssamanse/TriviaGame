@@ -1,4 +1,6 @@
-// TRY THIS WITH ONE OBJECT PER QUESTION ALL IN AN ARRAY VARIABLE, ACCESS W/ COUNTER
+// START SCREEN
+// RESTART BUTTON W/ NEW ROUND OF QUESTIONS
+// ADD MORE QUESTIONS
 
 $(document).ready(function() {
 
@@ -24,10 +26,12 @@ $(document).ready(function() {
 	// Unanswered Count
 	var unansweredCount = $("#unansweredCount");
 	var unanswered = 0;
-	
 
 	// Image location in HTML
 	var gif = $("#gif");
+
+	// Restart location in HTML
+	var restart = $("#restart");
 
 	// Declaring interval ID to store countdown ID
 	var intervalId;
@@ -65,7 +69,7 @@ $(document).ready(function() {
 	var question3 = {
 		question: "Who was the FBI agent in Twin Peaks?", 
 		correctAnswer: "Dale Cooper",
-		answerOptions: ["Dale Cooper", "Laura Palmer", "Harry S. Truman", "Bejamin Horne"],
+		answerOptions: ["Dale Cooper", "Laura Palmer", "Harry S. Truman", "Benjamin Horne"],
 		correctAnswerGif: "dale-cooper-win.gif",
 		incorrectAnswerGif: "dale-cooper-lose.gif"
 	}
@@ -73,17 +77,57 @@ $(document).ready(function() {
 	var question4 = {
 		question: "Name the dynamic duo of The X-Files", 
 		correctAnswer: "Mulder and Scully",
-		answerOptions: ["Miller and Scavo", "Mulder and Scully", "Musgrave and Shriver", "Mulberry and Schroder"],
-		correctAnswerGif: "mulder-scully-win",
-		incorrectAnswerGif: "mulder-scully-lose"
+		answerOptions: ["Miller & Scavo", "Mulder & Scully", "Monk & Smitty", "Mulberry & Schroder"],
+		correctAnswerGif: "mulder-scully-win.gif",
+		incorrectAnswerGif: "mulder-scully-lose.gif"
 	}
 
 	var question5 = {
 		question: "Which one of these was not the last name of a main character in Dawson's Creek?", 
 		correctAnswer: "Morris",
 		answerOptions: ["Witter", "McPhee", "Lindley", "Morris"],
-		correctAnswerGif: "dawsons-creek-win",
-		incorrectAnswerGif: "dawsons-creek-lose"
+		correctAnswerGif: "",
+		incorrectAnswerGif: "dawsons-creek-lose.gif"
+	}
+
+	var question6 = {
+		question: "", 
+		correctAnswer: "Morris",
+		answerOptions: [""],
+		correctAnswerGif: "",
+		incorrectAnswerGif: ""
+	}
+
+	var question7 = {
+		question: "", 
+		correctAnswer: "",
+		answerOptions: [""],
+		correctAnswerGif: "",
+		incorrectAnswerGif: ""
+	}
+
+	var question8 = {
+		question: "", 
+		correctAnswer: "",
+		answerOptions: [""],
+		correctAnswerGif: "",
+		incorrectAnswerGif: ""
+	}
+
+	var question9 = {
+		question: "", 
+		correctAnswer: "",
+		answerOptions: [""],
+		correctAnswerGif: "",
+		incorrectAnswerGif: ""
+	}
+
+	var question10 = {
+		question: "", 
+		correctAnswer: "",
+		answerOptions: [""],
+		correctAnswerGif: "",
+		incorrectAnswerGif: ""
 	}
 
 	// --------------------------- Array for Trivia Questions ----------------------------------------------//
@@ -98,7 +142,7 @@ $(document).ready(function() {
 		currentQuestion.append((triviaQuestions[questionCounter]).question).addClass("question");
 
 		(triviaQuestions[questionCounter]).answerOptions.forEach(function(answerChoice) {
-			var answer = $("<button>").html(answerChoice).addClass("answer");
+			var answer = $("<button>").html(answerChoice).addClass("answer btn-lg");
 			answerChoices.append(answer);
 		})
 
@@ -106,24 +150,49 @@ $(document).ready(function() {
 			if ($(this).html() === (triviaQuestions[questionCounter]).correctAnswer) {
 				stop();
 				correct++;
-				questionCounter++;
-				// nextPage();
+				resultsPageWin();
 			} else {
 				stop();
 				incorrect++;
-				questionCounter++;
-				// nextPage();
+				resultsPageLose();
 			}
 		})
+
+		$("button").hover(function(){
+			$(this).css("opacity", ".5");
+		}, function(){
+			$(this).css("opacity", "1");
+});
 	}
 
+	// ----------- Functions to Generate Content and Counts for Wins, Losses and Unanswered Questions -----------------//
+
 	function resultsPageWin() {
-		// IF WIN, SHOW CORRECT! AND CORRECT GIF
+		emptyContent();
+		currentQuestion.html("<h2> Correct! </h2>");
+		gif.html("<img src='assets/images/" + ((triviaQuestions[questionCounter]).correctAnswerGif) + "' width='400px'>")
+		questionCounter++;
+		setTimeout(nextPage, 5000);
+
 	}
 
 	function resultsPageLose() {
-		// IF LOSE, SHOW INCCORECT W/ CORRECT ANSWER AND LOSE GIF
+		emptyContent();
+		currentQuestion.html("<h2> Wrong.. the correct answer was: " + (triviaQuestions[questionCounter].correctAnswer) + " </h2>");
+		gif.html("<img src='assets/images/" + ((triviaQuestions[questionCounter]).incorrectAnswerGif) + "' width='400px'>")
+		questionCounter++;
+		setTimeout(nextPage, 5000);
 	}
+
+	function resultsPageUnanswered() {
+		emptyContent();
+		currentQuestion.html("<h2> Time's up.. the correct answer was: " + (triviaQuestions[questionCounter].correctAnswer) + " </h2>");
+		gif.html("<img src='assets/images/" + ((triviaQuestions[questionCounter]).incorrectAnswerGif) + "' width='400px'>")
+		questionCounter++;
+		setTimeout(nextPage, 5000);
+	}
+
+	// --------------------------- Function to Go to Next Question or Final Screen --------------------------------------//
 
 	function nextPage() {
 		if (questionCounter >= 5) {
@@ -133,6 +202,7 @@ $(document).ready(function() {
 		}
 	}
 
+	// -------------------------------------------- End of Game Screen---------------------------------------------------//
 
 	function finalScreen() {
 		timeRemaining.empty();
@@ -140,17 +210,17 @@ $(document).ready(function() {
 		correctCount.html("<h3> Correct: " + correct + "</h3>");
 		incorrectCount.html("<h3> Incorrect: " + incorrect + "</h3>");
 		unansweredCount.html("<h3> Unanswered: " + unanswered + "</h3>");
+
 	}
 
-	// Empties all html content for trivia question, answer and images (leaves time remaining in place)
+	// --------------------------- Empty Content from Previous Question to Start Over --------------------------------------//
+
 	function emptyContent() {
 		currentQuestion.empty();
 		answerChoices.empty();
 		gif.empty();
+		timeRemaining.empty();
 	}
-
-	displayQuestion();
-
 
 	// --------------------------- Function to Countdown 30 Seconds then Stop ------------------------------//
 
@@ -169,8 +239,7 @@ $(document).ready(function() {
 			if (isOutOfTime === true) {
 				stop();
 				unanswered++;
-				questionCounter++;
-				// nextPage();
+				resultsPageUnanswered();
 			}
 		} 
 	}
@@ -179,4 +248,7 @@ $(document).ready(function() {
 		clearInterval(intervalId);
 	}
 
+displayQuestion();
+
 });
+

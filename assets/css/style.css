@@ -1,0 +1,41 @@
+* {
+	font-family: 'Chewy', cursive;
+
+}
+
+.header {
+	background-image: url("../images/tv-screen.png");
+	background-size: 100% 100%;
+
+}
+
+#wrapper {
+	background-image: url("../images/pink-gradient.svg");
+	background-size: cover;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+#title {
+	font-size: 90px;
+	margin-right: 300px;
+}
+
+.answer {
+	margin: 25px;
+	padding: 15px;
+	font-size: 36px;
+}
+
+.question {
+	font-size: 48px;
+	color: #ffffff;
+}
+
+.text {
+	font-style: 48px;
+	color: #ffffff;
+}

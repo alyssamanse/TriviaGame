@@ -3,36 +3,47 @@
   <head>
 
     <title>Trivia Game</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Chewy|Gochi+Hand|Patrick+Hand" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
   </head>
 
   <body>
 
-  <div class="header">
-    <h1>Trivia Game!</h1>
+  <div class="container-fluid text-center" id="wrapper">
+    <div class="header jumbotron">
+      <h1 id="title">The Name Game!</h1>
+    </div>
+
+    <div class="container-fluid text-center">
+      <div class="row">
+        <div class="col-md-12">
+          <div id="startScreen" class="text"></div>
+
+          <div id="timeRemaining" class="text"></div>
+
+          <div id="currentQuestion"></div>
+
+          <div>
+            <ul id="answerChoices" style="list-style-type: none"></ul>
+          </div>
+
+          <div id="correctAnswer"></div>
+
+          <div id="gif"></div>
+
+          <div id="correctCount" class="text"></div>
+
+          <div id="incorrectCount" class="text"></div>
+
+          <div id="unansweredCount" class="text"></div>
+
+          <div id="restart"></div>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div id="timeRemaining"></div>
-
-  <div id="currentQuestion"></div>
-
-  <div>
-    <ul id="answerChoices" style="list-style-type: none"></ul>
-  </div>
-
-  <div id="result"></div>
-
-  <div id="correctAnswer"></div>
-
-  <div id="gif"></div>
-
-  <div id="correctCount"></div>
-
-  <div id="incorrectCount"></div>
-
-  <div id="unansweredCount"></div>
-
-  <div id="restart"></div>
 
   </body>
 
