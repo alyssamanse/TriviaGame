@@ -1,3 +1,5 @@
+// TRY THIS WITH ONE OBJECT PER QUESTION ALL IN AN ARRAY VARIABLE, ACCESS W/ COUNTER
+
 $(document).ready(function() {
 
 	// Time Remaining
@@ -39,75 +41,69 @@ $(document).ready(function() {
 	var isOutOfTime;
 	var questionCounter = 0;
 
-	console.log("global scope " + isOutOfTime);
-
 	// CHANGE NEXTPAGE TO SHOW CORRECT ANSWER AND THEN DISPLAY NEXT QUESTION
 	// TEST IMAGES IN NEXTPAGE FUNCTION
 
 	// --------------------------- Bank of Questions -------------------------------------------------------//
 
-	var triviaQuestions = [
-		"What is Rachel Green's middle name?",
-		"What is the dog's name in Frasier?", 
-		"Who was the FBI agent in Twin Peaks?",
-		"Name the dynamic duo of The X-Files", 
-		"Which one of these was not the last name of a main character in Dawson's Creek?",
-	]
+	var question1 = {
+		question: "What is Rachel Green's middle name?", 
+		correctAnswer: "Karen",
+		answerOptions: ["Monica", "Karen", "Maryann", "Krystal"],
+		correctAnswerGif: "rachel-karen-green-win.gif",
+		incorrectAnswerGif: "rachel-karen-green-lose.gif"
+	}
 
+	var question2 = {
+		question: "What is the dog's name in Frasier?", 
+		correctAnswer: "Eddie",
+		answerOptions: ["Martin", "Buster", "Eddie", "Sir Pounce"],
+		correctAnswerGif: "eddie-frasier-win.gif",
+		incorrectAnswerGif: "eddie-frasier-lose.gif"
+	}
 
-	// --------------------------- Bank of Correct Answers -------------------------------------------------//
+	var question3 = {
+		question: "Who was the FBI agent in Twin Peaks?", 
+		correctAnswer: "Dale Cooper",
+		answerOptions: ["Dale Cooper", "Laura Palmer", "Harry S. Truman", "Bejamin Horne"],
+		correctAnswerGif: "dale-cooper-win.gif",
+		incorrectAnswerGif: "dale-cooper-lose.gif"
+	}
 
-	var correctAnswers = [
-		"Karen",
-		"Eddie",
-		"Dale Cooper",
-		"Mulder and Scully",
-		"Morris",
-	]
+	var question4 = {
+		question: "Name the dynamic duo of The X-Files", 
+		correctAnswer: "Mulder and Scully",
+		answerOptions: ["Miller and Scavo", "Mulder and Scully", "Musgrave and Shriver", "Mulberry and Schroder"],
+		correctAnswerGif: "mulder-scully-win",
+		incorrectAnswerGif: "mulder-scully-lose"
+	}
 
-	// --------------------------- Bank of Answer Choices --------------------------------------------------//
+	var question5 = {
+		question: "Which one of these was not the last name of a main character in Dawson's Creek?", 
+		correctAnswer: "Morris",
+		answerOptions: ["Witter", "McPhee", "Lindley", "Morris"],
+		correctAnswerGif: "dawsons-creek-win",
+		incorrectAnswerGif: "dawsons-creek-lose"
+	}
 
-	var answerOptions = [
-		["Monica", "Karen", "Maryann", "Krystal"],
-		["Martin", "Buster", "Eddie", "Sir Pounce"],
-		["Dale Cooper", "Laura Palmer", "Harry S. Truman", "Bejamin Horne"],
-		["Miller and Scavo", "Mulder and Scully", "Musgrave and Shriver", "Mulberry and Schroder"],
-		["Witter", "McPhee", "Lindley", "Morris"],
-	] 
+	// --------------------------- Array for Trivia Questions ----------------------------------------------//
 
-	// --------------------------- Bank of Answer Gifs -----------------------------------------------------//
-
-	var correctAnswerGifs = [
-		"rachel-karen-green-win.gif",
-		"eddie-frasier-win.gif",
-		"dale-cooper-win.gif",
-		"mulder-scully-win",
-		"dawsons-creek-win"
-	]
-
-	var incorrectAnswerGifs = [
-		"rachel-karen-green-lose.gif",
-		"eddie-frasier-lose.gif",
-		"dale-cooper-lose.gif",
-		"mulder-scully-lose",
-		"dawsons-creek-lose"
-	]
+	var triviaQuestions = [question1, question2, question3, question4, question5];
 
 	// --------------------------- Display Question and Answer Choices--------------------------------------//
 
 	function displayQuestion() {
-		console.log("inside displayQuestion function " + isOutOfTime);
 		countdownTimer();
 		emptyContent();
-		currentQuestion.append(triviaQuestions[questionCounter]).addClass("question");
+		currentQuestion.append((triviaQuestions[questionCounter]).question).addClass("question");
 
-		answerOptions[questionCounter].forEach(function(answerChoice) {
+		(triviaQuestions[questionCounter]).answerOptions.forEach(function(answerChoice) {
 			var answer = $("<button>").html(answerChoice).addClass("answer");
 			answerChoices.append(answer);
 		})
 
 		$("button").click(function(event) {
-			if ($(this).html() === correctAnswers[questionCounter]) {
+			if ($(this).html() === (triviaQuestions[questionCounter]).correctAnswer) {
 				stop();
 				correct++;
 				questionCounter++;

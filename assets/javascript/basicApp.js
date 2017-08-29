@@ -80,13 +80,6 @@ var triviaQuestions = [
 
 ]
 
-function addQuestion() {
-	$("#question1").html(triviaQuestions[0].question);
-	var answerBtns = $("<input type='radio'>")
-	answerBtns.triviaQuestions[0].answerChoices.appendTo($("answers1"));
-}
-
-addQuestion();
 
 // Display all questions 
 // Create buttons for all answer choices

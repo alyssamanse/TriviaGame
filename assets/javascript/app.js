@@ -12,11 +12,6 @@ $(document).ready(function() {
 
 	// Answer Choices
 	var answerChoices = $("#answerChoices");
-	var answer1 = "<li list-style='none'>" + triviaQuestions[questionCounter].answers[0] + "</li>";
-	var answer2 = "<li list-style='none'>" + triviaQuestions[questionCounter].answers[1] + "</li>";
-	var answer3 = "<li list-style='none'>" + triviaQuestions[questionCounter].answers[2] + "</li>";
-	var answer4 = "<li list-style='none'>" + triviaQuestions[questionCounter].answers[3] + "</li>";
-	var printAnswers = answerChoices.html("<ul>" + answer1 + answer2 + answer3 + answer4 + "</ul>")
 
 	// Result
 	var result = $("#result");
