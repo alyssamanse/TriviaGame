@@ -48,4 +48,12 @@
 .restartButton {
 	font-size: 36px;
 	padding: 25px;
+	margin: 25px;
+}
+
+.startButton {
+	margin-top: 100px;
+	padding: 30px;
+	font-size: 48px;
+	color: #000000;
 }
