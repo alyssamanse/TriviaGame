@@ -1,6 +1,7 @@
 // START SCREEN
-// RESTART BUTTON W/ NEW ROUND OF QUESTIONS
+// ADD SOUNDS FOR WINNING AND LOSING
 // ADD MORE QUESTIONS
+// MAKE TIMER SHOW UP FIRST
 
 $(document).ready(function() {
 
@@ -16,12 +17,10 @@ $(document).ready(function() {
 	// Correct Answer Count
 	var correctCount = $("#correctCount");
 	var correct = 0;
-	// correctCount.html("<h3> Correct: " + correct + "</h3>");
 
 	// Incorrect Answer Count
 	var incorrectCount = $("#incorrectCount");
 	var incorrect = 0;
-	// incorrectCount.html("<h3> Incorrect: " + incorrect + "</h3>");
 
 	// Unanswered Count
 	var unansweredCount = $("#unansweredCount");
@@ -77,7 +76,7 @@ $(document).ready(function() {
 	var question4 = {
 		question: "Name the dynamic duo of The X-Files", 
 		correctAnswer: "Mulder and Scully",
-		answerOptions: ["Miller & Scavo", "Mulder & Scully", "Monk & Smitty", "Mulberry & Schroder"],
+		answerOptions: ["Miller and Scavo", "Mulder and Scully", "Monk and Smitty", "Mulberry and Sandy"],
 		correctAnswerGif: "mulder-scully-win.gif",
 		incorrectAnswerGif: "mulder-scully-lose.gif"
 	}
@@ -86,7 +85,7 @@ $(document).ready(function() {
 		question: "Which one of these was not the last name of a main character in Dawson's Creek?", 
 		correctAnswer: "Morris",
 		answerOptions: ["Witter", "McPhee", "Lindley", "Morris"],
-		correctAnswerGif: "",
+		correctAnswerGif: "dawsons-creek-win.gif",
 		incorrectAnswerGif: "dawsons-creek-lose.gif"
 	}
 
@@ -144,6 +143,7 @@ $(document).ready(function() {
 		(triviaQuestions[questionCounter]).answerOptions.forEach(function(answerChoice) {
 			var answer = $("<button>").html(answerChoice).addClass("answer btn-lg");
 			answerChoices.append(answer);
+			answer.after("<br>");
 		})
 
 		$("button").click(function(event) {
@@ -162,14 +162,14 @@ $(document).ready(function() {
 			$(this).css("opacity", ".5");
 		}, function(){
 			$(this).css("opacity", "1");
-});
-	}
+		})
+	};
 
 	// ----------- Functions to Generate Content and Counts for Wins, Losses and Unanswered Questions -----------------//
 
 	function resultsPageWin() {
 		emptyContent();
-		currentQuestion.html("<h2> Correct! </h2>");
+		currentQuestion.html("<h2> Correct! </h2>").addClass("text");
 		gif.html("<img src='assets/images/" + ((triviaQuestions[questionCounter]).correctAnswerGif) + "' width='400px'>")
 		questionCounter++;
 		setTimeout(nextPage, 5000);
@@ -178,7 +178,7 @@ $(document).ready(function() {
 
 	function resultsPageLose() {
 		emptyContent();
-		currentQuestion.html("<h2> Wrong.. the correct answer was: " + (triviaQuestions[questionCounter].correctAnswer) + " </h2>");
+		currentQuestion.html("<h2> Wrong.. the correct answer was: " + (triviaQuestions[questionCounter].correctAnswer) + " </h2>").addClass("text");
 		gif.html("<img src='assets/images/" + ((triviaQuestions[questionCounter]).incorrectAnswerGif) + "' width='400px'>")
 		questionCounter++;
 		setTimeout(nextPage, 5000);
@@ -186,7 +186,7 @@ $(document).ready(function() {
 
 	function resultsPageUnanswered() {
 		emptyContent();
-		currentQuestion.html("<h2> Time's up.. the correct answer was: " + (triviaQuestions[questionCounter].correctAnswer) + " </h2>");
+		currentQuestion.html("<h2> Time's up.. the correct answer was: " + (triviaQuestions[questionCounter].correctAnswer) + " </h2>").addClass("text");
 		gif.html("<img src='assets/images/" + ((triviaQuestions[questionCounter]).incorrectAnswerGif) + "' width='400px'>")
 		questionCounter++;
 		setTimeout(nextPage, 5000);
@@ -210,7 +210,24 @@ $(document).ready(function() {
 		correctCount.html("<h3> Correct: " + correct + "</h3>");
 		incorrectCount.html("<h3> Incorrect: " + incorrect + "</h3>");
 		unansweredCount.html("<h3> Unanswered: " + unanswered + "</h3>");
+		var restartButton = $("<button>").html("Restart").addClass("restartButton btn-lg");
+		restart.append(restartButton);
 
+		$("button").hover(function(){
+			$(this).css("opacity", ".5");
+		}, function(){
+			$(this).css("opacity", "1");
+		})
+
+		restartButton.click(function() {
+			questionCounter = 0;
+			emptyContent();
+			emptyScores();
+			correct = 0;
+			incorrect = 0;
+			unanswered = 0;
+			displayQuestion();
+		})
 	}
 
 	// --------------------------- Empty Content from Previous Question to Start Over --------------------------------------//
@@ -220,6 +237,13 @@ $(document).ready(function() {
 		answerChoices.empty();
 		gif.empty();
 		timeRemaining.empty();
+		restart.empty();
+	}
+
+	function emptyScores() {
+		correctCount.empty();
+		incorrectCount.empty();
+		unansweredCount.empty();
 	}
 
 	// --------------------------- Function to Countdown 30 Seconds then Stop ------------------------------//
